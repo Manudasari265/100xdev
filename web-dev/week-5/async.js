@@ -1,3 +1,37 @@
+// Promises in JavaScript
+// Basic promisified template
+const myPromise = new Promise((resolve, reject) => {
+    let success = true;
+
+    setTimeout(() => {
+        if(success) {
+            resolve(`Operation was successful!`);
+        } else {
+            reject(`Operation rejected!`);
+        }
+    }, 1000);
+})
+
+myPromise.then((result) => console.log(result));
+myPromise.then((error) => console.log(error));
+
+// Usage of Promise in fetchdata example
+const fetchData = new Promise((resolve, reject) => {
+    let fetched = true;
+
+    setTimeout(() => {
+        if(fetched) {
+            resolve(`Data fetched successfully`);
+        } else {
+            reject(`Failed to fetch the data`);
+        }
+    }, 2000);
+})
+
+fetchData.then((result) => console.log(result));
+fetchData.then((error) => console.log(error));
+
+
 function fakeApiCalls(response) {
     return new Promise((resolve, reject) => {
         setTimeout(() =>{
