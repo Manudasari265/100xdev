@@ -7,9 +7,14 @@ app.use(express.json());
 
 const users = []; // global users array variable - in memory database 
 
-const JWT_SECRET = "USER_APP";
+const JWT_SECRET = "Manoj@123";
 
-app.post("/signup", (req, res) => {
+// Client side's localhost:3000
+app.get("/", function(req, res) {
+    res.sendFile(__dirname + "/web-dev/week-6/authentication/public/index.html");
+})
+
+app.post("/signup", logger, (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
@@ -18,11 +23,11 @@ app.post("/signup", (req, res) => {
         password: password
     })
     res.json( {
-        message: "you are signed in"
+        message: "you are signed up"
     })
 });
 
-app.post("/signin", (req, res) => {
+app.post("/signin", logger, (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
@@ -38,7 +43,6 @@ app.post("/signin", (req, res) => {
         const token = jwt.sign({
             username: user.username
         }, JWT_SECRET);
-
         // user.token = token;
         res.send({
             token
@@ -63,10 +67,31 @@ app.post("/signin", (req, res) => {
 //     return token;
 // }
 
-app.get("/me", (req, res) => {
-    const token = req.headers.authorization;
-    const userInformation = jwt.verify(token, JWT_SECRET);
-    const username = userInformation.username;
+function logger(req, res, next) {
+    console.log(`${req.method} request came`);
+    next();
+}
+
+function auth(req, res, next) {
+    const token = req.headers.token;
+    const decodedData = jwt.verify(token, JWT_SECRET);
+
+    if (decodedData.username) {
+        req.username = decodedData.username;
+        next()
+    } else {
+        res.json({
+            message: "You are not logged in"
+        })
+    }
+}
+
+
+app.get("/me", logger, auth, (req, res) => {
+    const username = req.username;
+    // const token = req.headers.authorization;
+    // const userInformation = jwt.verify(token, JWT_SECRET);
+    // const username = userInformation.username;
     const user = users.find(user => user.username === username);
     if(user) {
         res.send({
