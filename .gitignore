@@ -1,21 +1,51 @@
-# Ignore node_modules across all subdirectories
-node_modules/
-
-# Ignore logs
+# Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Ignore environment files
-.env
+# Dependency directories
+node_modules/
 
-# Ignore build outputs
+# Build outputs
 dist/
+dist-ssr/
 build/
 
-# Ignore OS-specific files
+# Local environment files
+*.local
+.env
+
+# OS-specific files
 .DS_Store
 Thumbs.db
 
-# Ignore editor-specific files
+# Editor-specific files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Yarn-specific
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Uncomment the following line if you want to enable zero-installs for Yarn
+# Documentation: https://yarnpkg.com/features/caching#zero-installs
+# !.yarn/cache
+
+.pnp.*
+
+# Miscellaneous
 .vscode/
