@@ -1,3 +1,5 @@
-*** Introducing New-Gen Task Focus App
+ <h1>Introducing New-Gen Task Focus App</h1>
 
-[x] Updated the client with shadcn/ui + tailwind.css configuration
+  <div>
+    <p>Updated the client with shadcn/ui + tailwind.css configuration</p>
+  </div>
