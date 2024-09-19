@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { userInfo } from 'os';
 
 const Schema = mongoose.schema;
 const ObjectId = Schema.objectId;
@@ -14,4 +15,12 @@ const Todo = new Schema ( {
     title: String,
     done: Boolean
 });
+
+const UserModel = mongoose.model('users', User);
+const UserTodo = mongoose.model('todos', Todo);
+
+module.exports = {
+    UserModel,
+    UserTodo
+};
 
