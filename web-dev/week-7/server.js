@@ -1,10 +1,11 @@
 import express, { json } from 'express'; 
 import { UserModel, UserTodo } from './db';
+import { Auth, JWT_SECRET } from './auth';
 
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = "s3cretPasscode";
 const app = express();
 const port = 3000;
+const mongoose = require("mongodb+srv://dasarimanoj265:xvZRU1czPILnHbAJ@cluster0.dsc41.mongodb.net/");
 
 app.use(cors());
 app.use(json());
@@ -36,17 +37,21 @@ app.post("/signin", (req, res) => {
 
     if(isUserExisting) {
         const token = jwt.sign( {
-            id: isUserExisting._id
+            id: isUserExisting._id.toString()
         });
 
         res.json({
             message: "You are signed in"
         })
+    } else {
+        res.status(403).json({
+            message: "Incorrect credentials"
+        })
     }
 });
 
 app.post("/todo", (req, res) = {
-
+    
 });
 
 app.get("/todos", (req, res) => {

@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import { userInfo } from 'os';
-
-const Schema = mongoose.schema;
-const ObjectId = Schema.objectId; // * important
+const Schema = mongoose.schema; 
+const ObjectId = Schema.objectId; 
 
 const User = new Schema ( {
     name: String,
@@ -10,7 +9,7 @@ const User = new Schema ( {
     password: String
 });
 
-const Todo = new Schema ( {
+const Todo = new Schema ( { 
     userId: ObjectId,
     title: String,
     done: Boolean
