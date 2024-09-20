@@ -5,7 +5,7 @@ import { Auth, JWT_SECRET } from './auth';
 const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3000;
-const mongoose = require("mongodb+srv://dasarimanoj265:xvZRU1czPILnHbAJ@cluster0.dsc41.mongodb.net/");
+const mongoose = require("");
 
 app.use(cors());
 app.use(json());
@@ -51,7 +51,7 @@ app.post("/signin", (req, res) => {
 });
 
 app.post("/todo", (req, res) = {
-    
+
 });
 
 app.get("/todos", (req, res) => {
