@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { userInfo } from 'os';
 
 const Schema = mongoose.schema;
-const ObjectId = Schema.objectId;
+const ObjectId = Schema.objectId; // * important
 
 const User = new Schema ( {
     name: String,
