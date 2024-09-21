@@ -12,8 +12,11 @@ app.use("course", courseRouter);
 
 app.get()
 
-
-app.listen(port, () => {
-    console.log(`Server is running on ${port}`);
-});
+async function main() {
+   // ! secure the db connection string before remote commit
+   await mongoose.connect("");
+   app.listen(port, () => {
+      console.log(`Server is running on ${port}`);
+   });
+}
 
