@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react"
 
 function App() {
-
+  let [counterVisible, setCounterVisible] = useState(true);
+  
+  useEffect(() => {
+    setInterval(() => {
+      setCounterVisible(count => !count)
+    }, 5000);
+  }, [])
   return (
     <>
-      <Counter></Counter>
+     {counterVisible ? <Counter></Counter> : null }
     </>
   )
 }
@@ -15,10 +21,13 @@ function Counter() {
   //* hooking, re-rendering, unmounting
   console.log("counter");
   useEffect(() => {
-    setInterval(() => {
+    let clock = setInterval(() => {
       setCount(count => count + 1);
-    }, 1000)
-  }, []); // dependency array
+    }, 1000);
+    return () => {
+      clearInterval(clock);
+    }
+  }, []); // dependency array, clean-up, fetch inside useEffect
 
   const increaseCount = () => {
     setCount(count + 1);
@@ -31,3 +40,95 @@ function Counter() {
 }
 
 export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
