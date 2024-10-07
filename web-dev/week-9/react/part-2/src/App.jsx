@@ -63,6 +63,42 @@ function Greeting({ firstName, age }) {
   )
 }
 
+function NameList() {
+  const [names, setNames] = useState([]);
+  const [newName, setNewName] = useState('')
+
+  const addName = () => {
+    if(newName.trim() !== '') {
+      setNames([...names, newName]);
+      setNewName('');
+    }
+  }
+  
+  const removeName = (index) => {
+    setNames(names.filter((_, i) => i !== index));
+  }
+
+  return (
+    <>
+      <h2>Name List</h2>
+      <input 
+        type="text"
+        value={newName}
+        onChange={(e) => setNewName(e.target.value)}
+      />
+      <button onClick={addName}>Add Name</button>
+      <ul>
+        {names.map((name, index) => {
+          <li key={index}>
+            {name}
+            <button onClick={() => removeName(index)}>Remove Name</button>
+          </li>
+        })}
+      </ul>
+    </>
+  )
+}
+
 export default App
 
 
