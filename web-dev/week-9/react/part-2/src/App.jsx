@@ -14,8 +14,10 @@ function App() {
     <>
      {counterVisible ? <Counter></Counter> : null }
      <Greeting firstName="John" age={25}/>
+     <Name name1="manoj"/>
      <NameList/>
      <TodoApp/>
+     <Form/>
      <ColorPicker/>
      <Counter2/>
      <TemperatureConverter/>
@@ -23,6 +25,7 @@ function App() {
   )
 }
 
+//* Counter component
 function Counter() {
   const [count, setCount] = useState(0);
 
@@ -49,6 +52,7 @@ function Counter() {
   );
 }
 
+//* Greeting component
 function Greeting({ firstName, age }) {
   const [name, setName] = useState(firstName);
 
@@ -63,6 +67,14 @@ function Greeting({ firstName, age }) {
   )
 }
 
+//* Name prop(easy)
+function Name({name1}) {
+  return (
+    <h2>Hello, {name1}</h2>
+  );
+}
+
+//* NameList component(medium)
 function NameList() {
   const [names, setNames] = useState([]);
   const [newName, setNewName] = useState('')
@@ -73,7 +85,7 @@ function NameList() {
       setNewName('');
     }
   }
-  
+
   const removeName = (index) => {
     setNames(names.filter((_, i) => i !== index));
   }
@@ -99,6 +111,28 @@ function NameList() {
   )
 }
 
+//* Mini todoApp 
+function TodoApp() {
+  const [todos, setTodos] = useState([]);
+  const [inputText, setInputText] = useState('');
+
+  const addtodos = () => {
+    if(inputText.trim() !== '') {
+      setTodos([
+        ...todos,
+        { text: inputText, description: inputText, completed: false }
+      ]);
+      setInputText('');
+    }
+  }
+
+}
+
+
+//* trim(), splice(), split()
+function Form() {
+  
+}
 export default App
 
 
