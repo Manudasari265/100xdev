@@ -131,7 +131,30 @@ function TodoApp() {
 
 //* trim(), splice(), split()
 function Form() {
-  
+  const [input, setInput] = useState('');
+
+  const handleSubmit = () => {
+    const trimmedInput = input.trim();
+    const words = trimmedInput.split('');
+
+    const updatedWords = [...words];
+    updatedWords.splice(0, 1);
+
+    console.log(`Original words: ${words}`);
+    console.log(`After splice: ${updatedWords}`);
+  }
+
+  return (
+    <div>
+      <input 
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Enter some text"
+      />  
+      <button onClick={handleSubmit}>Submit</button> 
+    </div>
+  )
 }
 export default App
 
