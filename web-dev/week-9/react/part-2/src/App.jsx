@@ -1,26 +1,24 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react"
+import { useState, useEffect, useSyncExternalStore } from "react"
 
 function App() {
-  let [counterVisible, setCounterVisible] = useState(true);
+  // let [counterVisible, setCounterVisible] = useState(true);
   
-  useEffect(() => {
-    setInterval(() => {
-      setCounterVisible(count => !count)
-    }, 5000);
-  }, [])
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setCounterVisible(count => !count)
+  //   }, 5000);
+  // }, [])
   return (
     <>
-     {counterVisible ? <Counter></Counter> : null }
+     {/* {counterVisible ? <Counter></Counter> : null } */}
      <Greeting firstName="John" age={25}/>
      <Name name1="manoj"/>
      <NameList/>
      <TodoApp/>
      <Form/>
-     <ColorPicker/>
-     <Counter2/>
-     <TemperatureConverter/>
+     <ToggleVisibility/>
     </>
   )
 }
@@ -156,6 +154,28 @@ function Form() {
     </div>
   )
 }
+
+function ToggleVisibility() {
+  const [visible, setVisible] = useState(false);
+
+  const toggle = () => {
+    return setVisible((visible) => !visible);
+  }
+
+  return (
+    <>
+     <button onClick={toggle}>Toggle Text</button>
+     {visible && <p>This text appears and disappears!</p>} 
+
+     <button onClick={() => setVisible(!visible)}>
+      {visible ? 'Hide text' : 'Show text'}
+     </button>
+     {visible &&  <p>This text appears and disappears</p>}
+    </>
+  )
+}
+
+
 export default App
 
 
