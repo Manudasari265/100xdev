@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { PostComponent } from './Post';
+import { Navigation } from './Navigation';
+import { ReturnFunc } from './ReturnFunc';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -28,7 +30,9 @@ function App() {
       <button onClick={addPost}>Add post</button>
       <div style={{display: "flex", justifyContent: "center"}}>
         <div>
+          <Navigation />
           {postComponent}
+          <ReturnFunc />
         </div>
       </div>
     </div>
