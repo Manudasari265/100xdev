@@ -53,4 +53,3 @@ function Increase() {
   </div>
 }
 
-export default App
