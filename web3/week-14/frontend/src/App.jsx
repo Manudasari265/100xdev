@@ -1,33 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Transaction, Connection, Publickey, SystemProgram, LAMPORTS_PER_SOL } from "@solana/web3.js"
+
+const connection = new Connection("");
+
+//TODO: install node polyfills, axios libraries
+  //TODO: make a RPC connection from alchemy etc, latest blockHash functions
 
 function App() {
-  const [count, setCount] = useState(0)
 
+   async function sendSol() {
+    const ix = SystemProgram.transfer({
+      fromPubkey: Publickey(""), //TODO: declare it as global variable later on 
+      toPubkey: new Publickey(""),
+      lamports: 0.01 * LAMPORTS_PER_SOL
+    })
+    const tx = Transaction().add(ix);
+
+    const { blockHash } = connection.getLatestBlockhash();
+    tx.recentBlockHash = blockHash
+    tx.feepayer = fromPubkey
+
+    // convert the Tx to a bunch of bytes
+    const serializedTx = tx.serialize({
+      requireAllSignatures: false,
+      verifySignatures: false
+    });
+
+    await axios.post("api/v1/txn/sign", {
+      message: serializedTx,
+      retry: false
+    })
+  }
+
+  
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+     <input type="text" placeholder="Amount" ></input>
+     <input type="text" placeholder="Address" ></input>
+     <button onClick={sendSol}>Submit</button>
+
     </>
   )
 }

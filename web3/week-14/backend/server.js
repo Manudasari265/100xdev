@@ -3,6 +3,8 @@ const { userModel } = require("./models/model")
 const jwt = require("jsonwebtoken");
 const JWT_TOKEN = "123344";
 const app = express();
+const cors = require("cors");
+const connection = new Connection("") //TODO: attach a RPC node URL here
 
 app.use(express.json());
 
@@ -49,7 +51,22 @@ app.post("api/v1/signin", async (req, res) => {
 })
 
 
-app.post("api/v1/txn/sign", (req, res) => {
+app.post("api/v1/txn/sign", async (req, res) => {
+    const serializedTransaction = req.body.message;
+
+    const tx = Transaction.from(serializedTransaction);
+    const user = await userModel.fin({
+        where: {
+            _id: ""
+        }
+    })
+    const privateKey = user.privateKey;
+    const keypair = new keypair(); //TODO: keypair.fromSecretKey(bs58.decode((process.env.PRIVATE_KEY))
+
+    tx.sign(keypair)
+
+    const signature = await connection.sendTransaction(tx);
+
     res.json({
         message: "Sign up"
     })
