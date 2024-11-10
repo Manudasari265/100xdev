@@ -30,5 +30,13 @@ class Manager implements People {
     }
 }
 
+class God extends Manager {
+    constructor(name: string, age: number) {
+        super(name, age)
+    }
+}
+
 let user1 = new Manager("John", 30,);
 console.log(user1.isLegal1);
+
+//TODO interfaces, classes, extends, implements
