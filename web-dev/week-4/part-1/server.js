@@ -20,19 +20,20 @@ let todos = [{
     id: 1,
     title: "go to gym",
     description: "have to visit gym",
-    done: true,
+    completed: true,
 }, {
     id: 2,
     title: "eat lunch",
     description: "have to eat lunch",
-    done: false,
+    completed: false,
 }, {
     id: 3,
     title: "visit library at 4PM",
     description: "have to visit library",
-    done: true,
+    completed: true,
 }];
 
+//TODO: Get all todos
 app.get("/api/v1/all-todos", function(req, res) {
     if(todos.length == 0) {
         res.json({
@@ -43,8 +44,21 @@ app.get("/api/v1/all-todos", function(req, res) {
     }
 });
 
-app.post("/api/v1/todos", function(req, res) {
+//TODO: Create a new todo
+app.post("/api/v1/todos", async function(req, res) {
+    const { title, description, completed } = req.body
+    
+   if(!title) {
+    return res.status(400).json({
+        error: "Title is required",
+    })
+   }
 
+   const newTodos = 
+
+    res.status(200).json({
+        message: "Your todos have been updated"
+    })
 });
 
 app.put("/api/v1/todos/:id", function(req, res) {
