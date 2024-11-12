@@ -47,3 +47,37 @@ exports.createTodo = (req, res) => {
     })
 };
 
+exports.updateTodo = (req, res) => {
+    const id = req.params.id;
+    const { title, description, completed } = req.body;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    
+    if(!todo) {
+        return res.status(404).json({
+            error: "Task not found",
+        })
+    }
+    todo.title = title || todo.title;
+    todo.description = description || todo.description;
+    todo.completed = completed !== undefined ? completed : todo.completed;
+
+    res.status(200).json(todo, {
+        message: "Task have been successfully updated",
+    })
+};
+
+exports.deleteTodo = (req, res) => {
+    const { id } = req.params;
+    const index = todos.findIndex((ind) => ind.id === parseInt(id));
+
+    if(index === -1 || index == false || index === undefined) {
+        res.status(404).json({
+            error: "Can't find the task"
+        })
+    }
+    const deletedTodo = todos.splice(index, 1)[0];
+    res.status(200).json({
+        message: "Successfully deleted the task",
+        deletedTodo
+    })
+};
