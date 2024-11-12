@@ -1,19 +1,27 @@
+
 // Middleware to parse JSON request bodies
 // Example route handlers
 // Save user to database
 // Example middleware to log requests
 // Example custom error handling middleware
+
 //TODO: In-memory todo list
 //TODO: Get all todos
 //TODO: Create a new todo
 //TODO: Update a todo
 //TODO: Delete a todo
 
+
 const express = require('express');
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+
+const logIncomingRequests = (req, res, next) => {
+    console.log(`${req.method}, ${req.url}`);
+    next();
+}
 
 //TODO: In-memory todo list
 let todos = [{
@@ -34,7 +42,7 @@ let todos = [{
 }];
 
 //TODO: Get all todos
-app.get("/api/v1/all-todos", function(req, res) {
+app.get("/api/v1/todos", function(req, res) {
     if(todos.length == 0) {
         res.json({
             message: "You have no todos currently"
@@ -53,23 +61,64 @@ app.post("/api/v1/todos", async function(req, res) {
         error: "Title is required",
     })
    }
+   const newTodos = {
+    id: todos.length + 1,
+    title: title,
+    description: description,
+    completed: completed || false,
+   }
+   todos.push(newTodos);
 
-   const newTodos = 
-
-    res.status(200).json({
-        message: "Your todos have been updated"
+    res.status(201).json({
+        message: "Your todos have been updated",
+        newTodos
     })
 });
 
+//TODO: Update a todo
 app.put("/api/v1/todos/:id", function(req, res) {
+    const id = req.params.id;
+    const { title, description, completed } = req.body;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    
+    if(!todo) {
+        return res.status(404).json({
+            error: "Task not found",
+        })
+    }
+    todo.title = title || todo.title;
+    todo.description = description || todo.description;
+    todo.completed = completed !== undefined ? completed : todo.completed;
 
+    res.status(200).json(todo, {
+        message: "Task have been successfully updated",
+    })
 });
 
-app.delete("/api/v1/delete/:id", function(req, res) {
+//TODO: Delete a todo
+app.delete("/api/v1/todos/:id", function(req, res) {
+    const { id } = req.params;
+    const index = todos.findIndex((ind) => ind.id === parseInt(id));
 
+    if(index === -1 || index == false || index === undefined) {
+        res.status(404).json({
+            error: "Can't find the task"
+        })
+    }
+    const deletedTodo = todos.splice(index, 1)[0];
+    res.status(200).json({
+        message: "Successfully deleted the task",
+        deletedTodo
+    })
 });
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        error: "Internal server error"
+    })
+})
 
 app.listen(PORT, () => {
     console.log(`Listening on server ${PORT}`);
 })
-
