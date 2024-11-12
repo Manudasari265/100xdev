@@ -37,3 +37,15 @@ app.post('/api/users', function(req, res, next) {
         }
     })
 })
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+        error: err.message || 'Internal server error',
+    });
+    next();
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`);
+})
