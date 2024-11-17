@@ -1,20 +1,20 @@
-import mongoose, { model, Schema } from 'mongoose';
 
-mongoose.connect(""); //TODO create a database brainly and connect it 
+import mongoose, {model, Schema} from "mongoose";
+
+mongoose.connect //("mongodb://localhost:27017/brainly")
 
 const UserSchema = new Schema({
-    username: { type: String, unique: true },
+    username: {type: String, unique: true},
     password: String
 })
+
+export const UserModel = model("User", UserSchema);
 
 const ContentSchema = new Schema({
     title: String,
     link: String,
-    tags: [{ types: mongoose.Types.ObjectId, ref: 'Tag' }],
-    userId: {type: mongoose.Types.ObjectId, ref: 'User', required: true},
+    tags: [{type: mongoose.Types.ObjectId, ref: 'Tag'}],
+    userId: {type: mongoose.Types.ObjectId, ref: 'User', required: true },
 })
 
-export const UserModel = model("User", UserSchema);
 export const ContentModel = model("Content", ContentSchema);
-
-
