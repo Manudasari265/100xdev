@@ -1,11 +1,16 @@
-import express from 'express';
+import { express } from 'express';
 import { userModel } from './schema/db';
 import { z } from 'zod';
+import mongoose from 'mongoose';
+process.config();
 
 const app = express();
 const PORT = 3001;
 
+mongoose.connect("");
+
 app.use(express.json());
+app.use(cors());
 
 app.post("/signup", async function (req, res) {
     const requiredBody = z.object({
@@ -28,11 +33,13 @@ app.post("/signup", async function (req, res) {
         const { name } = req.body;
 
         const hashedPassword = await bcrypt.hash(password, 5);
+        console>log(salt);
 
         await userModel.create({
             email: email,
             password: hashedPassword,
             name: name,
+            salt: salt
         })
 
         res.status(201).json({
@@ -44,3 +51,15 @@ app.post("/signup", async function (req, res) {
         })
     }
 })
+
+async function main() {
+    try {
+        await mongoose.connect(process.env.DATABASE_URL);
+        console.log(`Server successfully connected to database`);
+        app.listen(PORT, () => {
+            console.log(`Server is listening on ${PORT}`);
+        })
+    } catch (error) {
+        console.log(`Failed to start the server`);
+    }
+}
