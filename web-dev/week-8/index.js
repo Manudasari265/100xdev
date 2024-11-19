@@ -2,15 +2,18 @@ import { express } from 'express';
 import { userModel } from './schema/db';
 import { z } from 'zod';
 import mongoose from 'mongoose';
-process.config();
+import { dotenv } from 'dotenv';
 
 const app = express();
 const PORT = 3001;
+dotenv.config();
 
 mongoose.connect("");
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "http:localhost:3000.com"
+}));
 
 app.post("/signup", async function (req, res) {
     const requiredBody = z.object({
@@ -46,6 +49,12 @@ app.post("/signup", async function (req, res) {
             message: "You are signed up"
         })
     } catch (error) {
+        if(error === 11000) {
+            res.status(409).json({
+                message: "Email is already registered",
+            })
+        }
+        console.log("Error during Signup: ", error);
         res.status(500).json({
             error: "Internal server error",
         })
@@ -63,3 +72,7 @@ async function main() {
         console.log(`Failed to start the server`);
     }
 }
+
+main().catch((error) => {
+    console.log(`Failed to initialize the application server: ${error}`);
+})
