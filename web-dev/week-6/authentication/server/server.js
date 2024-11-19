@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jwt');
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
 app.use(express.json());
 
@@ -104,6 +104,11 @@ app.get("/me", logger, auth, (req, res) => {
     }
 })
 
-app.listen(port, () => {
-    console.log('Server is running on port 3000');
-});
+async function main() {
+    await mongoose.connect(process.env.MONGO_URL);
+    app.listen(PORT, () => {
+        console.log(`Server is listening on ${PORT}`);
+    })
+}
+
+main()

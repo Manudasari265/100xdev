@@ -34,9 +34,9 @@ async function main() {
    // ! secure the db connection string before remote commit
    try{
       await mongoose.connect(process.env.DATABASE_URL);
-      console.log(`Connected to the database successfully`);
+      // console.log(`Connected to the database successfully`);
       app.listen(PORT, () => {
-        console.log(`Server is running on ${PORT}`);
+      //   console.log(`Server is running on ${PORT}`);
       });
    } catch (err) {
       console.log(`Failed to connect to the database or re-start the server`);
