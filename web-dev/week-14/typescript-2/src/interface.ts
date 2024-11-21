@@ -15,11 +15,7 @@ interface User {
 let user: User = {
     name: "manoj",
     age: 23,
-    address: {
-        city: "vizag",
-        country: "india",
-        pincode: 4556,
-    }
+    address: 
 }
 
 let user2 = {

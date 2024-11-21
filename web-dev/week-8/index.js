@@ -8,8 +8,6 @@ const app = express();
 const PORT = 3001;
 dotenv.config();
 
-mongoose.connect("");
-
 app.use(express.json());
 app.use(cors({
     origin: "http:localhost:3000.com"
