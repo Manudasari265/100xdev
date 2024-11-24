@@ -11,7 +11,8 @@ function App() {
       return;
     }
     const message = inputRef.current.value;
-    //@ts-ignore
+    console.log(message);
+    //@ts-expect-error
     socket.send(message)
   }
 
