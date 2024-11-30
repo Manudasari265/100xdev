@@ -1,7 +1,13 @@
 import express from 'express';
 import { Client } from 'pg';
+import dotenv from 'dotenv';
 
-const pgClient = new Client("postgresql://todo-db_owner:7WyI8UejFNSt@ep-wild-field-a5mga80o.us-east-2.aws.neon.tech/todo-db?sslmode=require");
+dotenv.config();
+
+const dbUrl = process.env.DATABASE_URL;
+console.log(dbUrl);
+
+const pgClient = new Client(dbUrl as string);
 const app = express();
 app.use(express.json());
 
