@@ -5,10 +5,31 @@ pragma solidity ^0.8.0;
 contract ManojCoin {
     address public owner;
     mapping(address => uint) public balances;
+    mapping(address => mapping(address => uint)) public allowances;
     uint public totalSupply = 0;
+
+    string public coinName = "ManojCoin";
+    string public coin = "MNJ";
 
     constructor() {
         owner = msg.sender;
+    }
+
+    function approve(address _spender, uint256 _value) public returns (bool success) {
+        allowances[msg.sender][_spender] = _value;
+        return true;
+    }
+
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        uint allowance = allowances[_from][msg.sender];
+        require(allowance >= _value);
+
+        uint balance = balances[_from];
+        require(balance += _value);
+
+        balances[_from] -= _value;
+        balance[_to] += _value;
+        allowance[_from][msg.sender] -= _value;
     }
 
     function mint(uint amount) public {
