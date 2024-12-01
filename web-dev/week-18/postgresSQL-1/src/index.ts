@@ -27,15 +27,21 @@ app.post("/signup", async (req, res) => {
         const insertQuery = `INSERT INTO user 
           (username, email, password) VALUES 
           ($1, $2, $3) RETURNING id`;
-
-        const response = await pgClient.query(insertQuery);
-        const userId = response.rows[0].id;
         
         const addressInsertQuery = `INSERT INTO addresses 
           (city, country, street, pincode, user_id) VALUES 
           ($1, $2, $3, $4, $5)`;
-        
+
+        //& SQL Transaction is implemented
+        await pgClient.query("BEGIN;");
+
+        const response = await pgClient.query(insertQuery);
+
+        const userId = response.rows[0].id;
+
         const addressInsertResponse = await pgClient.query(addressInsertQuery, [city, country, street, pincode, userId]);
+
+        await pgClient.query("COMMIT;");
 
         res.json({
             message: "You have signed up",
@@ -46,4 +52,8 @@ app.post("/signup", async (req, res) => {
         })
     }
     
+});
+
+app.get("/metadata", async (req, res) => {
+    const id = req.query.id;
 })
