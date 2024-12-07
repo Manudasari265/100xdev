@@ -14,7 +14,19 @@ app.get("/users", async(req, res) => {
 app.get("/todos/:id", async(req, res) => {
     const id = req.params.id;
 
+    const user = await client.user.findFirst({
+        where: {
+            id: parseInt(id)
+        },
+        select: {
+            todos: true,
+            username: true,
+            password: true,
+        }
+    })
+
     res.json({
+        user
     })
 })
 
@@ -44,3 +56,5 @@ async function getUser() {
 
 createUser();
 getUser();
+
+app.listen(3000);
