@@ -8,3 +8,9 @@ export async function POST(req: NextRequest) {
         data
     })
 }
+
+export async function GET(req: NextRequest, res: NextResponse) {
+    const data = await req.json();
+
+    return res.json({data});
+}
