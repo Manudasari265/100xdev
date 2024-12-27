@@ -10,3 +10,11 @@ function pollBlock(blockNumber: number) {
         topics: [id("Transfer(address,address,uint256)")],
     })
 }
+
+async function main() {
+    const currentBlock = 1;
+
+    while(1) {
+        await pollBlock(currentBlock);
+    }
+}
