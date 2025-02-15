@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_db
+    ports:
+      - 5432:5432
+
+  user_app:
+    build:
+      network: host
+      context: ./
+      dockerfile: Dockerfile
+
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres
+  
+    ports:
+      - 3000:3000
+  
+    depends_on:
+      - postgres
