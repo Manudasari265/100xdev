@@ -15,7 +15,9 @@
     "@ai-sdk/anthropic": "^1.1.11",
     "@ai-sdk/openai": "^1.1.14",
     "ai": "^4.1.46",
-    "typescript": "^5.7.3"
+    "dotenv": "^16.4.7",
+    "typescript": "^5.7.3",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/node": "^22.13.5",

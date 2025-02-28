@@ -1,7 +1,10 @@
 import { generateText } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { anthropic } from "@ai-sdk/anthropic";
+import dotenv from "dotenv";
 
-const model = openai("gpt-4");
+dotenv.config();
+
+const model = anthropic('claude-3-5-haiku-latest');
 
 const answerMyPrompt = async (
     prompt: string,
