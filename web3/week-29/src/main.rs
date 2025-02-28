@@ -1,3 +1,5 @@
+use std::fmt::{ Display };
+
 trait Shape {
     fn area(&self) -> u32;
 }
@@ -23,6 +25,24 @@ impl Shape for Circle {
     }
 }
 
+macro_rules! say_hello {
+    () => {
+        println!("Hello, world!");
+    };
+}
+
+//? macros in rust
+struct User {
+    username: String,
+    age: u32,
+}
+
+impl Display for User {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "This is the user struct with age {}, {}", self.age, self.username)
+    }
+}
+
 fn main() {
     let r = Rect {
         width: 10,
@@ -35,6 +55,17 @@ fn main() {
         radius: 24,
     };
     get_area(c);
+
+    say_hello!();
+
+    let u = User {
+        username: String::from("Manoj"),
+        age: 29
+    };
+
+    println!("{}", u.username);
+    println!("{}", u.age);
+    println!("{}", u);
 }
 
 fn get_area<T: Shape>(s: T) -> u32 {
