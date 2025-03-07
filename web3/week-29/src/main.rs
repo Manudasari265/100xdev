@@ -1,9 +1,14 @@
 use std::fmt::{ Display };
-use serde::{Serialize, Deserialize};
+use borsh::{BorshSerialize, BorshDeserialize};
 
 
-#[derive(Serialize, Deserialize)]
+#[derive(BorshSerialize, BorshDeserialize, Debug, Clone)]
 struct User1 {
+    username: String,
+    password: String,
+}
+
+struct User2 {
     username: String,
     password: String,
 }
@@ -84,7 +89,19 @@ fn main() {
     match serialized_string {
         Ok(str) => println!("{}", str),
         Err(_) => println!("Error while converting to string")
-    }
+    };
+
+    let u2 = User2 {
+        username: String::from("Dasari"),
+        password: String::from("3214"),
+    };
+
+    let mut v: Vec<u8> = Vec::new();
+
+    let ans = u.serialize(&mut v);
+
+    let user_res = User2::try_from_slice(&v).unwrap();
+    println!("{}", user_res.username);
 }
 
 fn get_area<T: Shape>(s: T) -> u32 {
