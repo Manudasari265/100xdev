@@ -1,4 +1,12 @@
 use std::fmt::{ Display };
+use serde::{Serialize, Deserialize};
+
+
+#[derive(Serialize, Deserialize)]
+struct User1 {
+    username: String,
+    password: String,
+}
 
 trait Shape {
     fn area(&self) -> u32;
@@ -66,6 +74,17 @@ fn main() {
     println!("{}", u.username);
     println!("{}", u.age);
     println!("{}", u);
+
+    let u1 = User1 {
+        username: String::from("Manoj"),
+        password: String::from("123"),
+    };
+
+    let serialized_string = serde_json::to_string(&u1);
+    match serialized_string {
+        Ok(str) => println!("{}", str),
+        Err(_) => println!("Error while converting to string")
+    }
 }
 
 fn get_area<T: Shape>(s: T) -> u32 {
