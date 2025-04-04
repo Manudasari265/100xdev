@@ -1,0 +1,12 @@
+cargo-features = ["edition2024"]
+
+[package]
+name = "week-32"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+pinocchio = "0.8.1"

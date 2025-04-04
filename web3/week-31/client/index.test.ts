@@ -47,4 +47,8 @@ test("Account is initialized", async () => {
     ]);
     
     await connection.confirmTransaction(txHash);
+
+    const counterAccountInfo = await connection.getAccountInfo(counterAccount.publicKey);
+    const counter = borsh.deserialize(schema, counterAccountInfo?.data);
+    expect(counter).toBe(new CounterAccount({ count: 0 }));
 });
